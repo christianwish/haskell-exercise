@@ -6,16 +6,20 @@ toLowerString = map toLower
 sameChars :: Int -> String -> String -> Bool
 sameChars index str1 str2 = if (str1 == str2)
     then True
-    else
-        if (index >= length str2 || length str1 /= length str2)
-            then False
-            else sameChars (index + 1) (headToTail str1) str2
+    else if (index >= length str2 || length str1 /= length str2)
+        then False
+        else sameChars (index + 1) (headToTail str1) str2
 
-areSame str1 str2 = sameChars 0 lowerStr1 lowerStr2
+areLowerSame s1 s2 = sameChars 0 lowerS1 lowerS2
     where
-        lowerStr1 = toLowerString str1
-        lowerStr2 = toLowerString str2
+        lowerS1 = toLowerString s1
+        lowerS2 = toLowerString s2
 
--- c acc v =
+wrap x = x:[]
 
--- doIt str = (foldl c) $ words str
+prepare str = map wrap $ words str
+
+-- groupWords a =
+
+
+-- [["Test"],["test"],["ttt"]]
