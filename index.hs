@@ -1,26 +1,24 @@
 import Data.Char (toLower)
--- Helper
-headToTail (h:str) = str ++ [h]
+
 toLowerStr = map toLower
-wrap x = x:[]
-prepare str = map wrap $ words str
 
-sameChars :: Int -> String -> String -> Bool
-sameChars i str1 str2 = if (str1 == str2)
-    then True
-    else if (i >= length str2 || length str1 /= length str2)
-        then False
-        else sameChars (i + 1) (headToTail str1) str2
+headToTail :: String -> Int -> String
+headToTail str i = (drop i str) ++ (take i str)
 
-areLowerSame s1 s2 = sameChars 0 (toLowerStr s1) (toLowerStr s2)
-firstSame (s1:xs1) (s2:xs2) = areLowerSame s1 s2
-groupItems ls1 ls2 = if (firstSame ls1 ls2) then [ls1 ++ ls2] else [ls1, ls2]
+imap :: (a -> Int -> b) -> [a] -> [b]
+imap fn list = zipWith fn list [0..]
 
-r acc (x:xs) = acc
+cloneList :: String -> [String]
+cloneList str =  length str `take` repeat str
 
-task = do
-    let stringList = prepare "Tokyo London Rome Donlon Kyoto"
-        result = foldl r stringList []
-    print(result)
+mutationList :: String -> [String]
+mutationList str = headToTail `imap` (cloneList str)
+
+areSame :: String -> String -> Bool
+areSame s1 s2 = toLowerStr s1 `elem` (mutationList $ toLowerStr s2)
+
+innerSame :: [String] -> [String] -> Bool
+innerSame (x:xs) (y:ys) = areSame x y
 
 -- [["Tokyo"],["London"],["Rome"],["Donlon"],["Kyoto"]]
+-- [["Tokyo"] ["Kyoto"]]
