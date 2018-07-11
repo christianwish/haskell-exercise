@@ -1,9 +1,16 @@
-headToTail str = [(drop 1 str) ++ (take 1 str)]
+import Data.Char (toLower)
 
-headToTailRec :: [String] -> Int -> [String]
-headToTailRec acc i
-    | (i == 0) = acc
-    | otherwise = headToTailRec (acc ++ (headToTail $ last acc)) (i - 1)
+toLowerStr = map toLower
 
-getMutationArray :: String -> [String]
-getMutationArray str = headToTailRec [str] (length str - 1)
+headToTail :: String -> Int -> String
+headToTail str i = (drop i str) ++ (take i str)
+
+imap :: (a -> Int -> b) -> [a] -> [b]
+imap fn list = zipWith fn list [0..]
+
+cloneList :: String -> [String]
+cloneList str =  length str `take` repeat str
+
+mutationList :: String -> [String]
+mutationList str = headToTail `imap` (cloneList $ toLowerStr str)
+
