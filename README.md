@@ -1,7 +1,7 @@
 # Haskell exercise
 Just lerning **haskell**
 
-### ✅ Exercises 1 `./GroupValues`
+### ✅ Exercise 1 `./GroupValues`
 
 inspiered by "[how to lose an it job in 10 minutes](https://hackernoon.com/how-to-lose-an-it-job-in-10-minutes-3d63213c8370)"
 
