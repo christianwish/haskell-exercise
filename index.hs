@@ -10,13 +10,19 @@ imap :: (a -> Int -> b) -> [a] -> [b]
 imap fn list = zipWith fn list [0..]
 
 cloneList :: String -> [String]
-cloneList str =  length str `take` repeat str
+cloneList str =  take len strs
+    where
+    len = length str
+    strs = repeat str
 
 mutationList :: String -> [String]
-mutationList str = headToTail `imap` (cloneList str)
+mutationList str = imap headToTail (cloneList str)
 
 areSame :: String -> String -> Bool
-areSame s1 s2 = toLowerStr s1 `elem` (mutationList $ toLowerStr s2)
+areSame s1 s2 = s1' `elem` s2s
+    where
+    s1' = toLowerStr s1
+    s2s = mutationList $ toLowerStr s2
 
 areNotSame :: String -> String -> Bool
 areNotSame s1 s2 = not $ areSame s1 s2
@@ -30,5 +36,3 @@ groupValues _ = []
 
 -- groupValues ["Tokyo", "London", "Rome", "Donlon", "Kyoto"]
 -- >>> [["Tokyo","Kyoto"],["London","Donlon"],["Rome"]]
-
-
