@@ -3,8 +3,6 @@ module GroupValues where
 import Data.List (zipWith)
 import Data.Char (toLower)
 
-toLowerStr = map toLower
-
 headToTail :: String -> Int -> String
 headToTail str i = (drop i str) ++ (take i str)
 
@@ -23,8 +21,8 @@ mutationList str = imap headToTail (cloneList str)
 areSame :: String -> String -> Bool
 areSame s1 s2 = s1' `elem` s2s
     where
-    s1' = toLowerStr s1
-    s2s = mutationList $ toLowerStr s2
+    s1' = map toLower $ s1
+    s2s = mutationList $ map toLower $ s2
 
 areNotSame :: String -> String -> Bool
 areNotSame s1 s2 = not $ areSame s1 s2
