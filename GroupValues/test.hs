@@ -10,11 +10,11 @@ main = hspec $ do
         it "groups all when values are same" $ do
             groupValues ["Test", "Estt"]  `shouldBe` [["Test", "Estt"]]
         it "groups single values when nothing matches" $ do
-            groupValues ["Test", "Estt", "Nope"]  `shouldBe` [["Test", "Estt"], ["Nope"]]
+            groupValues ["Test", "Estt", "Nope"]  `shouldBe` [["Nope"],["Test","Estt"]]
         it "gives empty list when empty list is given" $ do
             groupValues []  `shouldBe` []
-        it "works like task should" $ do
-            a `shouldBe` b
+        it "works like it should" $ do
+            actual `shouldBe` expected
                 where
-                a = groupValues ["Tokyo", "London", "Rome", "Donlon", "Kyoto", "Paris"]
-                b = [["Tokyo","Kyoto"],["London","Donlon"],["Rome"], ["Paris"]]
+                actual = groupValues ["Tokyo", "London", "Rome", "Donlon", "Kyoto", "Paris"]
+                expected = [["Paris"],["London","Donlon"],["Rome"],["Tokyo","Kyoto"]]
