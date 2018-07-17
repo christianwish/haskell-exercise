@@ -18,11 +18,13 @@ mutationList str = imap headToTail (cloneList str)
 cSort :: (a, String) -> (b, String) -> Ordering
 cSort (_,x) (_,y) = compare x y
 
+s :: [(String, String)] -> [(String, String)]
 s = sortBy cSort
 
 cGroup :: (a, String) -> (b, String) -> Bool
 cGroup (_,a) (_,b) = a == b
 
+g :: [(String, String)] -> [[(String, String)]]
 g = groupBy cGroup
 
 firstOfMutationList :: String -> String
@@ -30,6 +32,8 @@ firstOfMutationList x = sort $ head $ mutationList $ map toLower x
 
 addToMutationList = map (\x -> (x, firstOfMutationList x))
 
-toResult = map (map (\(x,_) -> x))
+cleanFlat :: [[(String, String)]] -> [[String]]
+cleanFlat = map (map (\(x,_) -> x))
 
-groupValues = toResult . g . s . addToMutationList
+groupValues ::[String] -> [[String]]
+groupValues = cleanFlat . g . s . addToMutationList

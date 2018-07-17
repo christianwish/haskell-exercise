@@ -2,6 +2,7 @@ import Test.Hspec
 import Test.QuickCheck
 import Control.Exception (evaluate)
 import GroupValues (groupValues)
+import GroupValuesCompact (groupValuesCompact)
 
 main :: IO ()
 main = hspec $ do
