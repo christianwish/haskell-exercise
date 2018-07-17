@@ -33,4 +33,3 @@ addToMutationList = map (\x -> (x, firstOfMutationList x))
 toResult = map (map (\(x,_) -> x))
 
 groupValues = toResult . g . s . addToMutationList
-
