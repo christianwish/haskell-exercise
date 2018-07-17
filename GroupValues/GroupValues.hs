@@ -15,11 +15,12 @@ cloneList str =  take (length str) (repeat str)
 mutationList :: String -> [String]
 mutationList str = imap headToTail (cloneList str)
 
-c (_,a) (_,b) = compare a b
-c2 (_,a) (_,b) = a == b
-s = sortBy c
-addToMutationList = map (\x -> (x, sort $ head $ mutationList $ map toLower x))
-g = groupBy c2
+cSort (_,a) (_,b) = compare a b
+cGroup (_,a) (_,b) = a == b
+s = sortBy cSort
+firstOfMutationList x = sort $ head $ mutationList $ map toLower x
+addToMutationList = map (\x -> (x, firstOfMutationList x))
+g = groupBy cGroup
 toResult = map (map (\(x,_) -> x))
 
 groupValues = toResult . g . s . addToMutationList
