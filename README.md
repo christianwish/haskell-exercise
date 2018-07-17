@@ -7,7 +7,7 @@ inspiered by "[how to lose an it job in 10 minutes](https://hackernoon.com/how-t
 
 `groupValues ["Tokyo", "London", "Rome", "Donlon", "Kyoto", "Paris"]`
 
-evaluates to  `[["Tokyo","Kyoto"],["London","Donlon"],["Rome"], ["Paris"]]`
+evaluates to  `[["Paris"],["London","Donlon"],["Rome"],["Tokyo","Kyoto"]]`
 
 ___
 * requires ghc (https://www.haskell.org/ghc/)
