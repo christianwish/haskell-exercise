@@ -1,39 +1,21 @@
-module GroupValues where
-
-import Data.List (zipWith, sort, sortBy, groupBy)
+module GroupValues (groupValues) where
+import Data.List (sort, sortOn, groupBy)
 import Data.Char (toLower)
 
 headToTail :: String -> Int -> String
-headToTail str i = (drop i str) ++ (take i str)
+headToTail str i = drop i str ++ take i str
 
-imap :: (a -> Int -> b) -> [a] -> [b]
-imap fn list = zipWith fn list [0..]
+cloneStr str = take (length str) (cycle [a])
+    where a = map toLower str
 
-cloneList :: String -> [String]
-cloneList str =  take (length str) (repeat str)
+mutationList _ [] = []
+mutationList i (x:xs) = [headToTail x i] ++ mutationList (i + 1) xs
 
-mutationList :: String -> [String]
-mutationList str = imap headToTail (cloneList str)
+getSharedId xs = head $ sort $ mutationList 0 xs
 
-cSort :: (a, String) -> (b, String) -> Ordering
-cSort (_,x) (_,y) = compare x y
+withSharedId str = (str, getSharedId $ cloneStr str)
 
-s :: [(String, String)] -> [(String, String)]
-s = sortBy cSort
+groupValues xs = map (map (\x -> fst x)) b
+    where b = groupBy (\x y -> snd x == snd y) a
+          a = sortOn snd $ map withSharedId xs
 
-cGroup :: (a, String) -> (b, String) -> Bool
-cGroup (_,a) (_,b) = a == b
-
-g :: [(String, String)] -> [[(String, String)]]
-g = groupBy cGroup
-
-firstOfMutationList :: String -> String
-firstOfMutationList x = sort $ head $ mutationList $ map toLower x
-
-addToMutationList = map (\x -> (x, firstOfMutationList x))
-
-cleanFlat :: [[(String, String)]] -> [[String]]
-cleanFlat = map (map (\(x,_) -> x))
-
-groupValues ::[String] -> [[String]]
-groupValues = cleanFlat . g . s . addToMutationList
