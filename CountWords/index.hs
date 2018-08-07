@@ -31,9 +31,9 @@ countWords blacklist input = (a, length restInputWords)
 
 main = do
     putStrLn "Eingabe:\n"
-    userInput <- getLine
+    userInput <- getLine -- Es blaut die Nacht, die Sternlein blinken
     handle <- openFile "./blacklist.txt" ReadMode
     fileContent <- hGetContents handle
     let result = countWords fileContent userInput
         s = (show $ snd result) ++ " Woerter, davon " ++ (show $ fst result) ++ " verschieden."
-    print s
+    putStrLn s
