@@ -1,5 +1,6 @@
 import Data.Char (toLower)
 import System.IO
+import System.Directory (doesFileExist, doesDirectoryExist)
 
 -- Helper
 toLowerString = map toLower
@@ -29,11 +30,20 @@ countWords blacklist input = (a, b)
         allInputWords = words $ replaceNonWords input
         uniqBlacklist = getUniqWords blacklist
 
+getFileContent :: String -> IO String
+getFileContent filePath = do
+    handle <- openFile filePath ReadMode
+    content <- hGetContents handle
+    return content
+
 main = do
     putStrLn "Eingabe:\n"
     userInput <- getLine -- Es blaut die Nacht, die Sternlein blinken
-    handle <- openFile "./blacklist.txt" ReadMode
-    fileContent <- hGetContents handle
+    blacklistExists <- doesFileExist "./blacklist.txt"
+    let fileContentIO = if not blacklistExists
+        then return ""
+        else getFileContent "./blacklist.txt"
+    fileContent <- fileContentIO
     let result = countWords fileContent userInput
         s = (show $ snd result) ++ " Woerter, davon " ++ (show $ fst result) ++ " verschieden."
     putStrLn s
