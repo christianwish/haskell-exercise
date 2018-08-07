@@ -29,12 +29,6 @@ countWords blacklist input = (a, b)
         uniqInput = getUniqWords input
         allInputWords = words $ replaceNonWords input
         uniqBlacklist = getUniqWords blacklist
---
--- getFileContent :: String -> IO String
--- getFileContent filePath = do
---     handle <- openFile filePath ReadMode
---     content <- hGetContents handle
---     return content
 
 getFileContent :: String -> String -> IO String
 getFileContent def filePath = readFile filePath `catch`
