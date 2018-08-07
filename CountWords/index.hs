@@ -19,7 +19,7 @@ getUniqWords str = foldl uniqWords [] w
           clearedStr = replaceNonWords str
 
 countWords :: String -> String -> (Int, Int)
-countWords blacklist input = (a, length restInputWords)
+countWords blacklist input = (a, b)
     where
         a = length restUniqeWords
         b = length restInputWords
